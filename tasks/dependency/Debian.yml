@@ -1,0 +1,5 @@
+---
+# code: language=ansible
+- name: Install meilisearch dependency packages
+  ansible.builtin.apt:
+    name: "{{ meilisearch_dependency_packages | default([]) }}"

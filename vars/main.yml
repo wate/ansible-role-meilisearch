@@ -1,0 +1,3 @@
+---
+# vars file for meilisearch
+meilisearch_dependency_packages: []
