@@ -1,5 +1,26 @@
 ---
 # code: language=ansible
-- name: Install meilisearch packages
-  ansible.builtin.apt:
-    name: "{{ meilisearch_packages }}"
+- name: Set Install version variable
+  when: meilisearch_version == 'latest'
+  block:
+    - name: Get latest release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/meilisearch/meilisearch/releases/latest
+        headers:
+          Accept: application/vnd.github+json
+      register: latest_releases
+    - name: Set tbls_version variable
+      ansible.builtin.set_fact:
+        meilisearch_version: "{{ latest_releases.json.tag_name }}"
+- name: Set pckage file variable
+  ansible.builtin.set_fact:
+    download_file: meilisearch-{{ ansible_facts.system | lower }}-{{ architecture_files[ansible_facts['architecture']] }}
+  vars:
+    architecture_files:
+      x86_64: amd64
+      aarch64: aarch64
+- name: Install Meilisearch
+  ansible.builtin.get_url:
+    url: https://github.com/meilisearch/meilisearch/releases/download/{{ meilisearch_version }}/{{ download_file }}
+    dest: /usr/local/bin/meilisearch
+    mode: "0755"

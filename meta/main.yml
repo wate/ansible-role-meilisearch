@@ -1,8 +1,8 @@
 ---
 galaxy_info:
   role_name: meilisearch
-  author: your name
-  description: your description
+  author: yosiaki tanaka
+  description: Setup Meilisearch
   license: Apache
   min_ansible_version: "2.13"
   platforms:

@@ -1,8 +1,5 @@
 ---
-# defaults file for meilisearch
-
 ## -----------------
-## Doc Comment
+## インストールするバージョン
 ## -----------------
-meilisearch_packages: []
-
+meilisearch_version: latest

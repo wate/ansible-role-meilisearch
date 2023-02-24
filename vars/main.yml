@@ -1,3 +1,8 @@
 ---
-# vars file for meilisearch
-meilisearch_dependency_packages: []
+meilisearch_user: meilisearch
+meilisearch_group: meilisearch
+
+meilisearch_work_dir: /var/lib/meilisearch
+meilisearch_db_dir: "{{ meilisearch_work_dir }}/data"
+meilisearch_dump_dir: "{{ meilisearch_work_dir }}/dumps"
+meilisearch_snapshot_dir: "{{ meilisearch_work_dir }}/snapshots"
