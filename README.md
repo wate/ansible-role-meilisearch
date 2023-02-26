@@ -1,7 +1,7 @@
 meilisearch
 =================
 
-Setup Meilisearch(work in progress)
+Setup Meilisearch
 
 OS Platform
 -----------------
