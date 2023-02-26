@@ -5,17 +5,23 @@
 meilisearch_version: latest
 
 ## -----------------
+## Meilisearchのマスターキー
+## ※`meilisearch_cfg.env`が`production`の場合に、16バイト以上のUTF-8文字列を必須
+## -----------------
+meilisearch_master_key: change_me_this_string
+
+## -----------------
 ## Meilisearchの設定
 ## -----------------
 meilisearch_cfg:
-  env: development
+  env: production
   db_path: "{{ meilisearch_db_dir }}/data.ms"
   http_addr: localhost:7700
   # no_analytics: true
   http_payload_size_limit: 100 MB
   log_level: INFO
-  max_indexing_memory: 2 GiB
-  max_indexing_threads: 4
+  # max_indexing_memory: 2 GiB
+  # max_indexing_threads: 4
   ## -------------------------
   ## DUMPS
   ## -------------------------

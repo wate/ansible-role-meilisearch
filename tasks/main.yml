@@ -15,6 +15,12 @@
   ansible.builtin.include_vars:
     file: "{{ variable_file }}"
   when: variable_file | length > 0
+- name: Assert master key
+  ansible.builtin.assert:
+    that:
+      - not meilisearch_master_key | length < 16
+    fail_msg: "`meilisearch_master_key`の指定に誤りがあります"
+  when: meilisearch_cfg.env == 'production'
 - name: Include dependency task
   ansible.builtin.import_tasks:
     file: dependency.yml

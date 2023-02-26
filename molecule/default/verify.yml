@@ -37,7 +37,7 @@
     # ファイルのテスト
     - name: Check virtualhost setting
       ansible.builtin.stat:
-        path: /opt/meilisearch/bin/meilisearch
+        path: /usr/local/bin/meilisearch
       register: result
     - name: Assert file
       ansible.builtin.assert:

@@ -1,7 +1,7 @@
 meilisearch
 =================
 
-Setup Meilisearch(work in progress)
+Setup Meilisearch
 
 OS Platform
 -----------------
@@ -19,6 +19,11 @@ Role Variables
 ### `meilisearch_version`
 
 インストールするバージョン
+
+### `meilisearch_master_key`
+
+Meilisearchのマスターキー  
+※`meilisearch_cfg.env`が`production`の場合に、16バイト以上のUTF-8文字列を必須
 
 ### `meilisearch_cfg`
 

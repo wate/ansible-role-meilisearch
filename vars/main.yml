@@ -3,7 +3,7 @@ meilisearch_user: meilisearch
 meilisearch_group: meilisearch
 
 meilisearch_home: /opt/meilisearch
-meilisearch_bin_dir: "{{ meilisearch_home }}/bin"
+meilisearch_bin_dir: /usr/local/bin
 meilisearch_db_dir: "{{ meilisearch_home }}/data"
 meilisearch_dump_dir: "{{ meilisearch_home }}/dumps"
 meilisearch_snapshot_dir: "{{ meilisearch_home }}/snapshots"

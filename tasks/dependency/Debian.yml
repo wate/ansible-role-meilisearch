@@ -9,6 +9,11 @@
     name: "{{ meilisearch_user }}"
     group: "{{ meilisearch_group }}"
     system: true
+- name: Create Meilisearch bin directory
+  ansible.builtin.file:
+    path: "{{ meilisearch_bin_dir }}"
+    state: directory
+    mode: "0755"
 - name: Create Meilisearch directories
   ansible.builtin.file:
     path: "{{ item }}"
@@ -18,7 +23,6 @@
     mode: "0755"
   loop:
     - "{{ meilisearch_home }}"
-    - "{{ meilisearch_bin_dir }}"
     - "{{ meilisearch_db_dir }}"
     - "{{ meilisearch_dump_dir }}"
     - "{{ meilisearch_snapshot_dir }}"
