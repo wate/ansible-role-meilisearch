@@ -1,15 +1,15 @@
 # This file shows the default configuration of Meilisearch.
 # All variables are defined here: https://docs.meilisearch.com/learn/configuration/instance_options.html#environment-variables
 
-db_path = "./data.ms"
+db_path = "{{ meilisearch_cfg.db_path }}"
 # Designates the location where database files will be created and retrieved.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#database-path
 
-env = "development"
+env = "{{ meilisearch_cfg.env }}"
 # Configures the instance's environment. Value must be either `production` or `development`.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#environment
 
-http_addr = "localhost:7700"
+http_addr = "{{ meilisearch_cfg.http_addr }}"
 # The address on which the HTTP server will listen.
 
 # master_key = "YOUR_MASTER_KEY_VALUE"
@@ -17,25 +17,34 @@ http_addr = "localhost:7700"
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#master-key
 
 # no_analytics = true
+{% if meilisearch_cfg.no_analytics is defined %}
+no_analytics = "{{ meilisearch_cfg.no_analytics | lower }}"
+{% endif %}
 # Deactivates Meilisearch's built-in telemetry when provided.
 # Meilisearch automatically collects data from all instances that do not opt out using this flag.
 # All gathered data is used solely for the purpose of improving Meilisearch, and can be deleted at any time.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#disable-analytics
 
-http_payload_size_limit = "100 MB"
+http_payload_size_limit = "{{ meilisearch_cfg.http_payload_size_limit }}"
 # Sets the maximum size of accepted payloads.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#payload-limit-size
 
-log_level = "INFO"
+log_level = "{{ meilisearch_cfg.log_level }}"
 # Defines how much detail should be present in Meilisearch's logs.
 # Meilisearch currently supports six log levels, listed in order of increasing verbosity:  `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#log-level
 
 # max_indexing_memory = "2 GiB"
+{% if meilisearch_cfg.max_indexing_memory is defined %}
+max_indexing_memory = "{{ meilisearch_cfg.max_indexing_memory }}"
+{% endif %}
 # Sets the maximum amount of RAM Meilisearch can use when indexing.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#max-indexing-memory
 
 # max_indexing_threads = 4
+{% if meilisearch_cfg.max_indexing_threads is defined %}
+max_indexing_threads = {{ meilisearch_cfg.max_indexing_threads }}
+{% endif %}
 # Sets the maximum number of threads Meilisearch can use during indexing.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#max-indexing-threads
 
@@ -43,19 +52,22 @@ log_level = "INFO"
 ### DUMPS ###
 #############
 
-dump_dir = "dumps/"
+dump_dir = "{{ meilisearch_cfg.dump_dir }}"
 # Sets the directory where Meilisearch will create dump files.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#dump-directory
 
 # import_dump = "./path/to/my/file.dump"
+{% if meilisearch_cfg.import_dump is defined %}
+import_dump = "{{ meilisearch_cfg.import_dump }}"
+{% endif %}
 # Imports the dump file located at the specified path. Path must point to a .dump file.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#import-dump
 
-ignore_missing_dump = false
+ignore_missing_dump = {{ meilisearch_cfg.ignore_missing_dump | lower }}
 # Prevents Meilisearch from throwing an error when `import_dump` does not point to a valid dump file.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ignore-missing-dump
 
-ignore_dump_if_db_exists = false
+ignore_dump_if_db_exists = {{ meilisearch_cfg.ignore_dump_if_db_exists | lower }}
 # Prevents a Meilisearch instance with an existing database from throwing an error when using `import_dump`.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ignore-dump-if-db-exists
 
@@ -64,25 +76,28 @@ ignore_dump_if_db_exists = false
 ### SNAPSHOTS ###
 #################
 
-schedule_snapshot = false
+schedule_snapshot = {{ meilisearch_cfg.schedule_snapshot | lower }}
 # Enables scheduled snapshots when true, disable when false (the default).
 # If the value is given as an integer, then enables the scheduled snapshot with the passed value as the interval
 # between each snapshot, in seconds.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#schedule-snapshot-creation
 
-snapshot_dir = "snapshots/"
+snapshot_dir = "{{ meilisearch_cfg.snapshot_dir }}"
 # Sets the directory where Meilisearch will store snapshots.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#snapshot-destination
 
 # import_snapshot = "./path/to/my/snapshot"
+{% if meilisearch_cfg.import_snapshot is defined %}
+import_snapshot = "{{ meilisearch_cfg.import_snapshot }}"
+{% endif %}
 # Launches Meilisearch after importing a previously-generated snapshot at the given filepath.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#import-snapshot
 
-ignore_missing_snapshot = false
+ignore_missing_snapshot = {{ meilisearch_cfg.ignore_missing_snapshot | lower }}
 # Prevents a Meilisearch instance from throwing an error when `import_snapshot` does not point to a valid snapshot file.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ignore-missing-snapshot
 
-ignore_snapshot_if_db_exists = false
+ignore_snapshot_if_db_exists = {{ meilisearch_cfg.ignore_snapshot_if_db_exists | lower }}
 # Prevents a Meilisearch instance with an existing database from throwing an error when using `import_snapshot`.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ignore-snapshot-if-db-exists
 
@@ -92,37 +107,47 @@ ignore_snapshot_if_db_exists = false
 ###########
 
 # ssl_auth_path = "./path/to/root"
+{% if meilisearch_cfg.ssl_auth_path is defined %}
+ssl_auth_path = "{{ meilisearch_cfg.ssl_auth_path }}"
+{% endif %}
 # Enables client authentication in the specified path.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-authentication-path
 
 # ssl_cert_path = "./path/to/certfile"
+{% if meilisearch_cfg.ssl_cert_path is defined %}
+ssl_cert_path = "{{ meilisearch_cfg.ssl_cert_path }}"
+{% endif %}
 # Sets the server's SSL certificates.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-certificates-path
 
 # ssl_key_path = "./path/to/private-key"
+{% if meilisearch_cfg.ssl_key_path is defined %}
+ssl_key_path = "{{ meilisearch_cfg.ssl_key_path }}"
+{% endif %}
 # Sets the server's SSL key files.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-key-path
 
 # ssl_ocsp_path = "./path/to/ocsp-file"
+{% if meilisearch_cfg.ssl_ocsp_path is defined %}
+ssl_ocsp_path = "{{ meilisearch_cfg.ssl_ocsp_path }}"
+{% endif %}
 # Sets the server's OCSP file.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-ocsp-path
 
-ssl_require_auth = false
+ssl_require_auth = {{ meilisearch_cfg.ssl_require_auth | lower }}
 # Makes SSL authentication mandatory.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-require-auth
 
-ssl_resumption = false
+ssl_resumption = {{ meilisearch_cfg.ssl_resumption | lower }}
 # Activates SSL session resumption.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-resumption
 
-ssl_tickets = false
+ssl_tickets = {{ meilisearch_cfg.ssl_tickets | lower }}
 # Activates SSL tickets.
 # https://docs.meilisearch.com/learn/configuration/instance_options.html#ssl-tickets
 
-#############################
-### Experimental features ###
-#############################
+#####################
+### Other setting ###
+#####################
 
-experimental-enable-metrics = false
-# Experimental metrics feature. For more information, see: <https://github.com/meilisearch/meilisearch/discussions/3518>
-# Enables the Prometheus metrics on the `GET /metrics` endpoint.
+{{ meilisearch_cfg.extra_setting | default('') }}

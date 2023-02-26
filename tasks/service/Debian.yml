@@ -1,7 +1,14 @@
 ---
 # code: language=ansible
-- name: Service meilisearch is active and enabled on system startup
+- name: Create/update systemd unit file
+  ansible.builtin.template:
+    src: meilisearch.service.j2
+    dest: /lib/systemd/system/meilisearch.service
+    mode: "0644"
+  notify: Restart meilisearch
+- name: Service Meilisearch is active and enabled on system startup
   ansible.builtin.systemd:
+    daemon_reload: true
     name: meilisearch
     state: started
     enabled: true

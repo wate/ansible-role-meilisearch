@@ -4,10 +4,10 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=simple
-WorkingDirectory=/var/lib/meilisearch
+WorkingDirectory={{ meilisearch_home }}
 User={{ meilisearch_user }}
 Group={{ meilisearch_group }}
-ExecStart={{ meilisearch_bin_dest }} --config-file-path /etc/meilisearch.toml
+ExecStart={{ meilisearch_bin_dir }}/meilisearch --config-file-path {{ meilisearch_home }}/config.toml
 
 [Install]
 WantedBy=multi-user.target

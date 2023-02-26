@@ -1,16 +1,10 @@
 ---
 # code: language=ansible
-# - name: Create/update setting file
-#   ansible.builtin.template:
-#     src: meilisearch.conf.j2
-#     dest: /erc/meilisearch/meilisearch.conf
-#     mode: "0644"
-# - name: Add/update option setting
-#   ansible.builtin.lineinfile:
-#     path: /etc/meilisearch/meilisearch.conf
-#     regexp: ^(#\\s+)?option_name=
-#     line: option_name=option_value
-# - name: Add/update custom setting
-#   ansible.builtin.blockinfile:
-#     path: /etc/meilisearch/meilisearch.conf
-#     block: "{{ meilisearch_extra_cfg | default('') }}"
+- name: Create/update setting file
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ meilisearch_home }}/config.toml"
+    owner: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
+    mode: "0644"
+  notify: Restart meilisearch

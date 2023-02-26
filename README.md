@@ -20,6 +20,10 @@ Role Variables
 
 インストールするバージョン
 
+### `meilisearch_cfg`
+
+Meilisearchの設定
+
 Example Playbook
 --------------
 

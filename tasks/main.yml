@@ -18,20 +18,20 @@
 - name: Include dependency task
   ansible.builtin.import_tasks:
     file: dependency.yml
-  tags: dependency
-- name: Include repository task
-  ansible.builtin.import_tasks:
-    file: repository.yml
-  tags: repository
+  tags:
+    - role_meilisearch_dependency
 - name: Include package task
   ansible.builtin.import_tasks:
     file: package.yml
-  tags: package
+  tags:
+    - role_meilisearch_package
 - name: Include setting task
   ansible.builtin.import_tasks:
     file: setting.yml
-  tags: setting
+  tags:
+    - role_meilisearch_setting
 - name: Include service task
   ansible.builtin.import_tasks:
     file: service.yml
-  tags: service
+  tags:
+    - role_meilisearch_service

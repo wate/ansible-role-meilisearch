@@ -1,5 +1,24 @@
 ---
 # code: language=ansible
-- name: Install meilisearch dependency packages
-  ansible.builtin.apt:
-    name: "{{ meilisearch_dependency_packages | default([]) }}"
+- name: Add Meilisearch group
+  ansible.builtin.group:
+    name: "{{ meilisearch_group }}"
+    system: true
+- name: Add Meilisearch user
+  ansible.builtin.user:
+    name: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
+    system: true
+- name: Create Meilisearch directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ meilisearch_home }}"
+    - "{{ meilisearch_bin_dir }}"
+    - "{{ meilisearch_db_dir }}"
+    - "{{ meilisearch_dump_dir }}"
+    - "{{ meilisearch_snapshot_dir }}"
