@@ -11,12 +11,17 @@ meilisearch_version: latest
 meilisearch_master_key: change_me_this_string
 
 ## -----------------
+## Meilisearchが利用するポート番号
+## -----------------
+meilisearch_port: 7700
+
+## -----------------
 ## Meilisearchの設定
 ## -----------------
 meilisearch_cfg:
   env: production
   db_path: "{{ meilisearch_db_dir }}/data.ms"
-  http_addr: localhost:7700
+  http_addr: localhost:{{ meilisearch_port }}
   # no_analytics: true
   http_payload_size_limit: 100 MB
   log_level: INFO
@@ -52,3 +57,5 @@ meilisearch_cfg:
   ## -------------------------
   # extra_setting: |
   #   experimental-enable-metrics: false
+
+# meilisearch_allow_connect_other_host: false

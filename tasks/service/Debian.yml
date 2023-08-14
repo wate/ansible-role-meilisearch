@@ -12,7 +12,8 @@
     name: meilisearch
     state: started
     enabled: true
-# - name: allow meilisearch port
-#   community.general.ufw:
-#     rule: allow
-#     port: "123456"
+- name: Allow meilisearch port
+  community.general.ufw:
+    rule: allow
+    port: "{{ meilisearch_port }}"
+  when: meilisearch_allow_connect_other_host | default(false)

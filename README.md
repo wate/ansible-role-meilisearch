@@ -25,6 +25,10 @@ Role Variables
 Meilisearchのマスターキー  
 ※`meilisearch_cfg.env`が`production`の場合に、16バイト以上のUTF-8文字列を必須
 
+### `meilisearch_port`
+
+Meilisearchが利用するポート番号
+
 ### `meilisearch_cfg`
 
 Meilisearchの設定
