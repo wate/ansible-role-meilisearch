@@ -8,7 +8,7 @@ meilisearch_version: latest
 ## Meilisearchのマスターキー
 ## ※`meilisearch_cfg.env`が`production`の場合に、16バイト以上のUTF-8文字列を必須
 ## -----------------
-meilisearch_master_key: change_me_this_string
+meilisearch_master_key: aSampleMasterKey
 
 ## -----------------
 ## Meilisearchが利用するポート番号
