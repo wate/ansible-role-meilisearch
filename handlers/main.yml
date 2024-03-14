@@ -1,12 +1,12 @@
 ---
 # code: language=ansible
 - name: Restart meilisearch
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     daemon_reload: true
     state: restarted
     name: meilisearch
 - name: Reload meilisearch
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     daemon_reload: true
     state: reloaded
     name: meilisearch
