@@ -9,9 +9,9 @@
           Accept: application/vnd.github+json
     - name: Merge Github API Authorization request header
       ansible.builtin.set_fact:
-        github_api_request_headers: "{{ github_api_request_headers | combine(merge_reauest_header) }}"
+        github_api_request_headers: "{{ github_api_request_headers | combine(merge_request_header) }}"
       vars:
-        merge_reauest_header:
+        merge_request_header:
           Authorization: Bearer {{ lookup('env', 'GITHUB_TOKEN') }}
       when: lookup('env', 'GITHUB_TOKEN') | length > 0
     - name: Get latest release
@@ -19,14 +19,14 @@
         url: https://api.github.com/repos/meilisearch/meilisearch/releases/latest
         headers: "{{ github_api_request_headers }}"
       register: latest_releases
-    - name: Set tbls_version variable
+    - name: Set meilisearch_version variable
       ansible.builtin.set_fact:
         meilisearch_version: "{{ latest_releases.json.tag_name }}"
-- name: Set pckage file variable
+- name: Set package file variable
   ansible.builtin.set_fact:
-    download_file: meilisearch-{{ ansible_facts.system | lower }}-{{ architecture_files[ansible_facts['architecture']] }}
+    download_file: meilisearch-{{ ansible_facts.system | lower }}-{{ arch_type_maps[ansible_facts['architecture']] }}
   vars:
-    architecture_files:
+    arch_type_maps:
       x86_64: amd64
       aarch64: aarch64
 - name: Install Meilisearch

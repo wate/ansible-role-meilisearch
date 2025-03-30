@@ -20,9 +20,9 @@
     owner: "{{ meilisearch_user }}"
     group: "{{ meilisearch_group }}"
     state: directory
-    mode: "0755"
+    mode: "750"
   loop:
-    - "{{ meilisearch_home }}"
+    - "{{ meilisearch_working_dir }}"
     - "{{ meilisearch_db_dir }}"
     - "{{ meilisearch_dump_dir }}"
     - "{{ meilisearch_snapshot_dir }}"

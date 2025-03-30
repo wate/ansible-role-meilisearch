@@ -1,6 +1,6 @@
 ---
 # code: language=ansible
-- name: Find pratform variable file
+- name: Find platform variable file
   ansible.builtin.set_fact:
     variable_file: "{{ lookup('first_found', params, errors='ignore') }}"
   vars:
@@ -11,10 +11,12 @@
         - "{{ ansible_facts.os_family }}.yml"
       paths:
         - vars
+  tags: role_meilisearch_include_vars
 - name: Include variable file
   ansible.builtin.include_vars:
     file: "{{ variable_file }}"
   when: variable_file | length > 0
+  tags: role_meilisearch_include_vars
 - name: Assert master key
   ansible.builtin.assert:
     that:
@@ -24,20 +26,16 @@
 - name: Include dependency task
   ansible.builtin.import_tasks:
     file: dependency.yml
-  tags:
-    - role_meilisearch_dependency
+  tags: role_meilisearch_dependency
 - name: Include package task
   ansible.builtin.import_tasks:
     file: package.yml
-  tags:
-    - role_meilisearch_package
+  tags: role_meilisearch_package
 - name: Include setting task
   ansible.builtin.import_tasks:
     file: setting.yml
-  tags:
-    - role_meilisearch_setting
+  tags: role_meilisearch_setting
 - name: Include service task
   ansible.builtin.import_tasks:
     file: service.yml
-  tags:
-    - role_meilisearch_service
+  tags: role_meilisearch_service

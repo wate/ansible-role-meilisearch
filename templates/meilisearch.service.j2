@@ -4,13 +4,12 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=simple
-{% if meilisearch_cfg.env == 'production' %}
-Environment=MEILI_MASTER_KEY={{ meilisearch_master_key }}
-{% endif %}
-WorkingDirectory={{ meilisearch_home }}
+EnvironmentFile=/etc/default/meilisearch
+WorkingDirectory={{ meilisearch_working_dir }}
+ExecStart={{ meilisearch_bin_dir }}/meilisearch --config-file-path /etc/meilisearch.toml
 User={{ meilisearch_user }}
 Group={{ meilisearch_group }}
-ExecStart={{ meilisearch_bin_dir }}/meilisearch --config-file-path {{ meilisearch_home }}/config.toml
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

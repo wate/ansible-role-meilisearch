@@ -15,8 +15,16 @@ meilisearch_master_key: aSampleMasterKey
 ## -----------------
 meilisearch_port: 7700
 
+## --------------------------
+## meilisearchの環境変数
+## @see https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch
+## --------------------------
+meilisearch_envs:
+  MEILI_MASTER_KEY: "{{ meilisearch_master_key }}"
+
 ## -----------------
 ## Meilisearchの設定
+## @see https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch
 ## -----------------
 meilisearch_cfg:
   env: production
@@ -53,9 +61,16 @@ meilisearch_cfg:
   ssl_resumption: false
   ssl_tickets: false
   ## -------------------------
-  ## other setting
+  ## Extra setting
+  ## (Experimental features)
   ## -------------------------
-  # extra_setting: |
-  #   experimental-enable-metrics: false
+  # extra_setting: ""
 
-# meilisearch_allow_connect_other_host: false
+
+## -------------------
+## サーバーへの接続を許可するIPアドレス
+## -------------------
+# meilisearch_allow_connect_other_host: 10.0.0.0/8
+# meilisearch_allow_connect_other_host: 172.16.0.0/12
+# meilisearch_allow_connect_other_host: 192.168.0.0/16
+# meilisearch_allow_connect_other_host: any

@@ -9,7 +9,6 @@ OS Platform
 ### Debian
 
 - bookworm
-- bullseye
 
 Role Variables
 --------------
@@ -31,9 +30,15 @@ Meilisearchのマスターキー
 
 Meilisearchが利用するポート番号
 
+#### `meilisearch_envs`
+
+meilisearchの環境変数  
+@see https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch
+
 #### `meilisearch_cfg`
 
-Meilisearchの設定
+Meilisearchの設定  
+@see https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch
 
 ### [vars/main.yml](vars/main.yml)
 
@@ -43,7 +48,7 @@ Meilisearchの設定
 
 #### `meilisearch_group`
 
-#### `meilisearch_home`
+#### `meilisearch_working_dir`
 
 #### `meilisearch_bin_dir`
 

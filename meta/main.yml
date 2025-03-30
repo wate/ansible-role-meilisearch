@@ -4,10 +4,9 @@ galaxy_info:
   author: yosiaki tanaka
   description: Setup Meilisearch
   license: Apache
-  min_ansible_version: "2.16"
+  min_ansible_version: "2.18"
   platforms:
     - name: Debian
       versions:
         - bookworm
-        - bullseye
 dependencies: []
