@@ -16,4 +16,5 @@
   community.general.ufw:
     rule: allow
     port: "{{ meilisearch_port }}"
-  when: meilisearch_allow_connect_other_host | default(false)
+    from_ip: "{{ meilisearch_allow_connect_other_host | default('any') }}"
+  when: meilisearch_allow_connect_other_host is defined

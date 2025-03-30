@@ -2,8 +2,16 @@
 # code: language=ansible
 - name: Create/update setting file
   ansible.builtin.template:
-    src: config.toml.j2
-    dest: "{{ meilisearch_home }}/config.toml"
+    src: meilisearch.toml.j2
+    dest: "/etc/meilisearch.toml"
+    owner: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
+    mode: "0644"
+  notify: Restart meilisearch
+- name: Create/update environment variable file
+  ansible.builtin.template:
+    src: env.j2
+    dest: "/etc/default/meilisearch"
     owner: "{{ meilisearch_user }}"
     group: "{{ meilisearch_group }}"
     mode: "0644"

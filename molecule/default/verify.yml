@@ -6,53 +6,12 @@
   # check_mode: true
   become: true
   tasks:
-    # ## パッケージのテスト
-    # - name: Gather the package facts
-    #   ansible.builtin.package_facts:
-    #     manager: auto
-    # - name: Assert package
-    #   ansible.builtin.assert:
-    #     that:
-    #       - ansible_facts.packages['package'] is defined
-    ## ユーザーのテスト
-    - name: Check user
-      ansible.builtin.user:
-        name: meilisearch
-        system: true
-      register: result
-    - name: Assert user
-      ansible.builtin.assert:
-        that:
-          - result is not changed
-    ## グループのテスト
-    - name: Check group
-      ansible.builtin.group:
-        name: meilisearch
-        system: true
-      register: result
-    - name: Assert group
-      ansible.builtin.assert:
-        that:
-          - result is not changed
-    # ファイルのテスト
-    - name: Check virtualhost setting
-      ansible.builtin.stat:
-        path: /usr/local/bin/meilisearch
-      register: result
-    - name: Assert file
-      ansible.builtin.assert:
-        that:
-          - result.stat.exists
-    ## サービスのテスト
+    ## パッケージのテスト
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: auto
     - name: Populate service facts
       ansible.builtin.service_facts:
-    - name: Assert service
-      ansible.builtin.assert:
-        that:
-          - ansible_facts.services['meilisearch.service'] is defined
-          - ansible_facts.services['meilisearch.service']['state'] == 'running'
-          - ansible_facts.services['meilisearch.service']['status'] == 'enabled'
-    ## 待受ポートのテスト
     - name: Gather facts on listening ports
       community.general.listen_ports_facts:
         command: ss
@@ -60,6 +19,42 @@
       ansible.builtin.set_fact:
         listen_tcp_posts: "{{ ansible_facts.tcp_listen | map(attribute='port') | unique | list }}"
         listen_udp_posts: "{{ ansible_facts.udp_listen | map(attribute='port') | unique | list }}"
+    ## ユーザーのテスト
+    - name: Check user
+      ansible.builtin.user:
+        name: meilisearch
+        system: true
+      register: user_result
+    - name: Assert user
+      ansible.builtin.assert:
+        that: user_result is not changed
+    ## グループのテスト
+    - name: Check group
+      ansible.builtin.group:
+        name: meilisearch
+        system: true
+      register: group_result
+    - name: Assert group
+      ansible.builtin.assert:
+        that: group_result is not changed
+    # ファイルのテスト
+    - name: Check meilisearch binary
+      ansible.builtin.stat:
+        path: /usr/local/bin/meilisearch
+      register: binary_result
+    - name: Assert file
+      ansible.builtin.assert:
+        that:
+          - binary_result.stat.exists
+          - binary_result.stat.executable
+    ## サービスのテスト
+    - name: Assert service
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['meilisearch.service'] is defined
+          - ansible_facts.services['meilisearch.service']['state'] == 'running'
+          - ansible_facts.services['meilisearch.service']['status'] == 'enabled'
+    ## 待受ポートのテスト
     - name: Assert listen port
       ansible.builtin.assert:
         that:
