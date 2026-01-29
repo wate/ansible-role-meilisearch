@@ -3,7 +3,6 @@
 - name: Verify
   hosts: all
   gather_facts: false
-  # check_mode: true
   become: true
   tasks:
     ## パッケージのテスト
@@ -20,27 +19,25 @@
         listen_tcp_posts: "{{ ansible_facts.tcp_listen | map(attribute='port') | unique | list }}"
         listen_udp_posts: "{{ ansible_facts.udp_listen | map(attribute='port') | unique | list }}"
     ## ユーザーのテスト
-    - name: Check user
-      ansible.builtin.user:
-        name: meilisearch
-        system: true
-      register: user_result
+    - name: Get user facts
+      ansible.builtin.getent:
+        database: passwd
+        key: meilisearch
     - name: Assert user
       ansible.builtin.assert:
-        that: user_result is not changed
-        fail_msg: "User meilisearch is missing or changed"
-        success_msg: "User meilisearch exists and is unchanged"
+        that: getent_passwd['meilisearch'] is defined
+        fail_msg: "User meilisearch does not exist"
+        success_msg: "User meilisearch exists"
     ## グループのテスト
-    - name: Check group
-      ansible.builtin.group:
-        name: meilisearch
-        system: true
-      register: group_result
+    - name: Get group facts
+      ansible.builtin.getent:
+        database: group
+        key: meilisearch
     - name: Assert group
       ansible.builtin.assert:
-        that: group_result is not changed
-        fail_msg: "Group meilisearch is missing or changed"
-        success_msg: "Group meilisearch exists and is unchanged"
+        that: getent_group['meilisearch'] is defined
+        fail_msg: "Group meilisearch does not exist"
+        success_msg: "Group meilisearch exists"
     # ファイルのテスト
     - name: Check meilisearch binary
       ansible.builtin.stat:
