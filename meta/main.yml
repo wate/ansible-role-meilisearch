@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: meilisearch
+  namespace: wate
   author: yosiaki tanaka
   description: Setup Meilisearch
   license: Apache
